@@ -6,6 +6,7 @@ require_relative "size/version"
 require_relative "size/prefixed_io"
 require_relative "size/gif"
 require_relative "size/png"
+require_relative "size/webp"
 
 class Size
   class FormatError < StandardError
