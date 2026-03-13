@@ -1,6 +1,6 @@
 # Size
 
-Detect image dimensions with minimal reads. Pure Ruby, zero dependencies.
+Detect AVIF, GIF, JPEG, PNG and WebP image dimensions with minimal memory usage. Pure Ruby, no deps.
 
 ## Usage
 
@@ -48,6 +48,6 @@ gem "size"
 
 **[ImageSize](https://github.com/toy/image_size)** has the broadest format coverage, with BMP, PSD, SWF, XPM and more. It reads in cached 4,096-byte chunks.
 
-**Size** supports five image formats and works only with local files and IO objects. Size aims to be very memory efficient, reading only what each format requires: 24 bytes for a PNG, 10 for a GIF, 25–30 for WebP. All three gems walk JPEG marker segments, but FastImage has 256 bytes in memory before it begins, ImageSize has 4,096 and Size has 12.
+**Size** covers five formats and works only with local files and IO objects. It reads the minimum each format requires: 10 bytes for a GIF, 24 for a PNG, 25–30 for WebP and up to 512 for AVIF. All three gems stream through JPEG markers, but FastImage begins with 256 bytes in memory, ImageSize with 4,096 and Size with 12.
 
 For URL support or broad format coverage, use FastImage or ImageSize. For the smallest possible memory usage, use Size.
