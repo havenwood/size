@@ -8,6 +8,7 @@ Detect AVIF, GIF, JPEG, PNG and WebP image dimensions with minimal memory usage.
 size = Size.of("photo.jpg")
 size.width  #=> 1920
 size.height #=> 1080
+size.pixels #=> 2073600
 size.class  #=> Size::JPEG
 ```
 

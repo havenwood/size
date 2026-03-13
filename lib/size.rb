@@ -11,6 +11,8 @@ require_relative "size/png"
 require_relative "size/webp"
 
 class Size
+  def pixels = width * height
+
   class FormatError < StandardError
     def initialize(message = "unrecognized image format") = super
   end

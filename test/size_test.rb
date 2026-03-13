@@ -42,6 +42,12 @@ class SizeTest < Minitest::Test
     assert_pattern { size => {width: 1, height: 2} }
   end
 
+  def test_pixels
+    size = Size.of(StringIO.new("GIF89a\x03\x00\x05\x00\x00\x00\x00".b))
+
+    assert_equal 15, size.pixels
+  end
+
   def test_version_constant
     assert_match(/\A\d+\.\d+\.\d+\z/, Size::VERSION)
   end
