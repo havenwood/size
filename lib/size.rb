@@ -4,8 +4,10 @@ Size = Data.define(:width, :height)
 
 require_relative "size/version"
 require_relative "size/prefixed_io"
+require_relative "size/isobmff"
 require_relative "size/avif"
 require_relative "size/gif"
+require_relative "size/heif"
 require_relative "size/jpeg"
 require_relative "size/png"
 require_relative "size/webp"
@@ -42,10 +44,22 @@ class Size
       elsif header[0, 4] == "RIFF" && header[8, 4] == "WEBP"
         WebP.read(io, header)
       elsif header[4, 4] == "ftyp"
-        AVIF.read(io, header)
+        isobmff_read(io, header)
       else
         raise FormatError
       end
+    end
+
+    def isobmff_read(io, header)
+      data = header
+      rest = io.read(500)
+      data += rest if rest
+      ftyp_size = data.unpack1("N")
+
+      klass = [AVIF, HEIF].find { |format| format.brand?(data, ftyp_size) }
+      raise FormatError unless klass
+
+      klass.read_isobmff(data)
     end
   end
 end
