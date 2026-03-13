@@ -3,6 +3,7 @@
 Size = Data.define(:width, :height)
 
 require_relative "size/version"
+require_relative "size/prefixed_io"
 require_relative "size/gif"
 require_relative "size/png"
 

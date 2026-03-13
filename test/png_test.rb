@@ -35,10 +35,7 @@ class PNGTest < Minitest::Test
   end
 
   def test_truncated_png
-    # 12 bytes passes header detection but PNG.read needs 24
-    data = "\x89PNG\r\n\x1A\n\x00\x00\x00\x0D".b
-
-    assert_raises(Size::FormatError) { Size.of(StringIO.new(data)) }
+    assert_raises(Size::FormatError) { Size.of(StringIO.new("\x89PNG\r\n\x1A\n\x00".b)) }
   end
 
   def test_invalid_png_signature
