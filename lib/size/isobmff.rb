@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 module Size::ISOBMFF
-  def read_isobmff(data)
-    ftyp_size = data.unpack1("N")
-
-    find_ispe(data, ftyp_size)
-  end
+  def read_isobmff(data) = find_ispe(data, data.unpack1("N"))
 
   def brand?(data, ftyp_size)
     return true if self::BRANDS.include?(data.byteslice(8, 4))

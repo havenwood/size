@@ -54,6 +54,8 @@ class JPEGTest < Minitest::Test
   end
 
   def test_truncated_jpeg
-    assert_raises(Size::FormatError) { Size.of(StringIO.new("\xFF\xD8\xFF".b)) }
+    data = "\xFF\xD8\xFF\xE0\x00\x10\x00\x00\x00\x00\x00\x00".b
+
+    assert_raises(Size::FormatError) { Size.of(StringIO.new(data)) }
   end
 end

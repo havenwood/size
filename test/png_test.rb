@@ -35,7 +35,9 @@ class PNGTest < Minitest::Test
   end
 
   def test_truncated_png
-    assert_raises(Size::FormatError) { Size.of(StringIO.new("\x89PNG\r\n\x1A\n\x00".b)) }
+    data = "\x89PNG\r\n\x1A\n\x00\x00\x00\x0D".b
+
+    assert_raises(Size::FormatError) { Size.of(StringIO.new(data)) }
   end
 
   def test_invalid_png_signature
