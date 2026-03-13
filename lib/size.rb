@@ -3,6 +3,7 @@
 Size = Data.define(:width, :height)
 
 require_relative "size/version"
+require_relative "size/gif"
 
 class Size
   class FormatError < StandardError
