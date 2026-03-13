@@ -15,5 +15,5 @@ Gem::Specification.new do |spec|
   spec.metadata["source_code_uri"] = spec.homepage
   spec.metadata["rubygems_mfa_required"] = "true"
 
-  spec.files = %w[LICENSE.txt Rakefile] + Dir["lib/**/*.rb"]
+  spec.files = %w[LICENSE.txt Rakefile README.md] + Dir["lib/**/*.rb"]
 end
