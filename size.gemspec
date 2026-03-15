@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email = ["shannonskipper@gmail.com"]
 
   spec.summary = "Detect image dimensions with minimal reads"
-  spec.description = "A pure Ruby library for detecting image dimensions by reading the minimum bytes from AVIF, GIF, HEIF, JPEG, PNG and WebP files"
+  spec.description = "A pure Ruby library for detecting image dimensions by reading the minimum bytes from AVIF, GIF, HEIF, JPEG, JPEG XL, PNG and WebP files"
   spec.homepage = "https://github.com/havenwood/size"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 4.0"

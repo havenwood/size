@@ -1,6 +1,6 @@
 # Size
 
-Detect AVIF, GIF, HEIF, JPEG, PNG and WebP image dimensions with minimal memory usage. Pure Ruby, no deps.
+Detect AVIF, GIF, HEIF, JPEG, JPEG XL, PNG and WebP image dimensions with minimal memory usage. Pure Ruby, no deps.
 
 ## Usage
 
@@ -29,7 +29,7 @@ in Size::JPEG[width:, height:]
 end
 ```
 
-Supports AVIF, GIF, HEIF, JPEG, PNG and WebP. Raises `Size::FormatError` for unrecognized or truncated formats.
+Supports AVIF, GIF, HEIF, JPEG, JPEG XL, PNG and WebP. Raises `Size::FormatError` for unrecognized or truncated formats.
 
 ## Installation
 
@@ -49,6 +49,6 @@ gem "size"
 
 **[ImageSize](https://github.com/toy/image_size)** has the broadest format coverage, with BMP, PSD, SWF, XPM and more. It reads in cached 4,096-byte chunks.
 
-**[Size](https://github.com/havenwood/size)** covers six formats and works only with local files and I/O objects. It reads the minimum each format requires: 10 bytes for a GIF, 24 for a PNG, 25–30 for WebP and a small number of box headers for AVIF and HEIF. All three gems stream through JPEG markers, but FastImage begins with 256 bytes in memory, ImageSize with 4,096 and Size with 12.
+**[Size](https://github.com/havenwood/size)** covers seven formats and works only with local files and I/O objects. It reads the minimum each format requires: 10 bytes for a GIF, 12 for a JPEG XL codestream, 24 for a PNG, 25–30 for WebP and a small number of box headers for AVIF, HEIF and JPEG XL containers. All three gems stream through JPEG markers, but FastImage begins with 256 bytes in memory, ImageSize with 4,096 and Size with 12.
 
 For URL support or broad format coverage, use FastImage or ImageSize. For the smallest possible memory usage, use Size.

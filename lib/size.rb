@@ -8,6 +8,7 @@ require_relative "size/avif"
 require_relative "size/gif"
 require_relative "size/heif"
 require_relative "size/jpeg"
+require_relative "size/jxl"
 require_relative "size/png"
 require_relative "size/webp"
 
@@ -38,6 +39,8 @@ class Size
         PNG.read(io, header)
       elsif header.start_with?("\xFF\xD8".b)
         JPEG.read(io, header)
+      elsif header.start_with?("\xFF\x0A".b) || header[4, 4] == "JXL "
+        JXL.read(io, header)
       elsif header.start_with?("GIF".b)
         GIF.read(io, header)
       elsif header[0, 4] == "RIFF" && header[8, 4] == "WEBP"
