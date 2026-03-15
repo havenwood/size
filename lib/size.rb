@@ -51,15 +51,15 @@ class Size
     end
 
     def isobmff_read(io, header)
-      data = header
-      rest = io.read(500)
-      data += rest if rest
-      ftyp_size = data.unpack1("N")
+      ftyp_size = header.unpack1("N")
+      remaining = ftyp_size - 12
+      ftyp_rest = (remaining > 0) ? io.read(remaining) : nil
+      ftyp_data = ftyp_rest ? header + ftyp_rest : header
 
-      klass = [AVIF, HEIF].find { |format| format.brand?(data, ftyp_size) }
+      klass = [AVIF, HEIF].find { |format| format.brand?(ftyp_data, ftyp_size) }
       raise FormatError unless klass
 
-      klass.read_isobmff(data)
+      klass.read_isobmff(io)
     end
   end
 end

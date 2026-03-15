@@ -40,6 +40,31 @@ class AVIFTest < Minitest::Test
     assert_equal 480, size.height
   end
 
+  def test_ispe_beyond_512_bytes
+    ftyp = [16].pack("N") + "ftypavif" + [0].pack("N")
+    large_box = build_box("free", "\x00" * 600)
+    iprp = build_iprp(1920, 1080)
+    meta = [12 + large_box.bytesize + iprp.bytesize].pack("N") + "meta" + [0].pack("N") + large_box + iprp
+
+    size = Size.of(StringIO.new(ftyp + meta))
+
+    assert_equal 1920, size.width
+    assert_equal 1080, size.height
+  end
+
+  def test_extended_size_box
+    ftyp = [16].pack("N") + "ftypavif" + [0].pack("N")
+    content = "\x00" * 20
+    extended_box = [1].pack("N") + "free" + [36].pack("Q>") + content
+    iprp = build_iprp(640, 480)
+    meta = [12 + extended_box.bytesize + iprp.bytesize].pack("N") + "meta" + [0].pack("N") + extended_box + iprp
+
+    size = Size.of(StringIO.new(ftyp + meta))
+
+    assert_equal 640, size.width
+    assert_equal 480, size.height
+  end
+
   def test_non_avif_isobmff
     ftyp = [16].pack("N") + "ftypmp41" + [0].pack("N")
 
