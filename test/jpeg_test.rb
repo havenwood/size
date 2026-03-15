@@ -58,4 +58,11 @@ class JPEGTest < Minitest::Test
 
     assert_raises(Size::FormatError) { Size.of(StringIO.new(data)) }
   end
+
+  def test_eoi_before_sof
+    data = "\xFF\xD8\xFF\xD9".b + "\x00".b * 8
+
+    error = assert_raises(Size::FormatError) { Size.of(StringIO.new(data)) }
+    assert_equal "no SOF marker before end of image", error.message
+  end
 end
