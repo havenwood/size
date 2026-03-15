@@ -5,9 +5,8 @@ class Size::JPEG < Size
   STANDALONE = Set[0x00, 0x01, *0xD0..0xD8]
 
   class << self
-    def read(io, header)
-      io = Size::PrefixedIO.new(header, io)
-      raise Size::FormatError, "invalid JPEG" unless io.read(2) == "\xFF\xD8".b
+    def read(io, _header)
+      io.seek(-10, IO::SEEK_CUR)
 
       loop do
         marker = read_marker(io)
@@ -49,8 +48,9 @@ class Size::JPEG < Size
       raise Size::FormatError, "truncated JPEG" unless len_bytes&.bytesize == 2
 
       len = len_bytes.unpack1("n")
-      skipped = io.read(len - 2)
-      raise Size::FormatError, "truncated JPEG" unless skipped&.bytesize == len - 2
+      raise Size::FormatError, "invalid JPEG segment length" if len < 2
+
+      io.seek(len - 2, IO::SEEK_CUR)
     end
   end
 end
